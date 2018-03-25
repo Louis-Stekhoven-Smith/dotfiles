@@ -1,6 +1,18 @@
+set nocompatible
+filetype off
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'vim-syntastic/syntastic'
+
+call vundle#end()
+filetype plugin indent on
 
 " change tabs to spaces
-filetype plugin indent on
 set tabstop=4
 set shiftwidth=4
 set expandtab
@@ -19,26 +31,8 @@ function TrimWhiteSpace()
 map <F2> :call TrimWhiteSpace()<CR>
 map! <F2> :call TrimWhiteSpace()<CR>
 
-
-" Don't try to be vi compatible
-set nocompatible
-
-" Helps force plugins to load correctly when it is turned back on below
-filetype off
-
-" TODO: Load plugins here (pathogen or vundle)
-" surround
-" youcompleteme
-"set up pathogen
-
 " Turn on syntax highlighting
 syntax on
-
-" For plugins to load correctly
-filetype plugin indent on
-
-" TODO: Pick a leader key
-" let mapleader = ","
 
 " Security
 set modelines=0
@@ -60,10 +54,6 @@ set scrolloff=3
 set backspace=indent,eol,start
 set matchpairs+=<:> " use % to jump between pairs
 runtime! macros/matchit.vim
-
-" Move up/down editor lines
-nnoremap j gj
-nnoremap k gk
 
 " Allow hidden buffers
 set hidden
