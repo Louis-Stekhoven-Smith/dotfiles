@@ -6,8 +6,10 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
+"  NOTE: you complete me needs CMake installed run `brew install CMake`
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'vim-syntastic/syntastic'
+Plugin 'scrooloose/nerdtree'
 
 call vundle#end()
 filetype plugin indent on
