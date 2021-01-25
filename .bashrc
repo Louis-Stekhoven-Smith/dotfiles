@@ -1,3 +1,4 @@
+
 ### load scripts ###
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -12,8 +13,6 @@ export LSCOLORS=ExFxBxDxCxegedabagacad
 
 ### Path vard ###
 export PATH=$JAVA_HOME/bin:$PATH
-export PATH=$PATH:/Users/lstekhovensmith/Applications/apache-maven-3.5.4/bin
-export PATH=$PATH:/Applications/Firefox.app/Contents/MacOS
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
 
@@ -27,22 +26,22 @@ aconex-vpn-on() {
 
 export http_proxy=http://www-proxy-syd.au.oracle.com:80
 export https_proxy=http://www-proxy-syd.au.oracle.com:80
-export no_proxy=localhost,artifacthub-tip.oraclecorp.com,artifacthub.oraclecorp.com,100.104.176.23,cegbuacx-docker-virtual.dockerhub-den.oraclecorp.com
+export no_proxy=localhost,artifacthub-tip.oraclecorp.com,artifacthub.oraclecorp.com,100.104.176.23,cegbuacx-docker-virtual.dockerhub-den.oraclecorp.com,*.docker.internal,*.oracle.com,jpg-data.us.oracle.com,kubernetes.docker.internal
 export HTTP_PROXY=http://www-proxy-syd.au.oracle.com:80
 export HTTPS_PROXY=http://www-proxy-syd.au.oracle.com:80
-export NO_PROXY=localhost,artifacthub-tip.oraclecorp.com,artifacthub.oraclecorp.com,100.104.176.23,cegbuacx-docker-virtual.dockerhub-den.oraclecorp.com
+export NO_PROXY=$no_proxy
 
 unset_proxys() {
     unset http_proxy &&  unset http_proxys && unset no_proxy && unset HTTP_PROXY && unset HTTP_PROXY && unset NO_PROXY
 }
 
 ### Enviroment vars ###
-export nexusAconexUsername=USERNAME
-export nexusAconexPassword=PASSWORD
+export nexusAconexUsername=lstekhovensmith
+export nexusAconexPassword=bd4259a7-70fa-4398-aa7e-d5b5af688262
 export ARTIFACT_REPOSITORY_USERNAME=$nexusAconexUsername
 export ARTIFACT_REPOSITORY_PASSWORD=$nexusAconexPassword 
 export JIRA_HOME=/Users/lstekhovensmith/dev/jira/home
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-11.0.8.jdk/Contents/Home
 export NVM_DIR="$HOME/.nvm"
 
 export VAGRANT_USE_VAGRANT_TRIGGERS=true
@@ -71,7 +70,7 @@ function parse_git_dirty {
   if [[ $? -ne 0 ]]; then printf ""; return; else printf "[";
       if echo ${STATUS} | grep -c "nothing to commit" &> /dev/null; then printf "😇"; else printf ""; fi
       if echo ${STATUS} | grep -c "diverged"        &> /dev/null; then printf "😱"; else printf ""; fi
-      if echo ${STATUS} | grep -c "Changes"         &> /dev/null; then printf "⚠️ "; else printf ""; fi
+      if echo ${STATUS} | grep -c "Changes"         &> /dev/null; then printf "changes"; else printf ""; fi
       if echo ${STATUS} | grep -c "branch is ahead" &> /dev/null; then printf "🎁"; else printf ""; fi
       if echo ${STATUS} | grep -c "branch is behind" &> /dev/null; then printf "💽"; else printf ""; fi
       if echo ${STATUS} | grep -c "Untracked files" &> /dev/null; then printf "📎"; else printf ""; fi
@@ -81,29 +80,20 @@ function parse_git_dirty {
 
 cdls() { cd "$@" && ls; }
 
+stopSec() {
+    sudo -v
+    for p in $(ps aux | grep McAfee | awk {'print $2'} | paste -sd " " -); 
+        do echo $1 | sudo -S kill -STOP $p | echo pause sig sent to pid: $p ; done
+}
 
 ############################### Alias
 alias build='mvn -e -Dmaven.artifact.threads=10 -Dcheckstyle.skip -Dpmd.skip -DskipTests clean install -T 4.0C && terminal-notifier -title "Bab Clean Install" -message "Finished" -sound default'
 alias ll='ls -lash'
 ###########   GIT   ############
-alias gitlist='printf "ga=git add 
-gc=git commit 
-gcm=git commit -m 
-gs=git status
-gits=git status
-gp=git pull --rebase
-gd=git diff 
-gds=git diff --staged
-gpush=git push 
-grh=git reset HEAD 
-gco=git checkout -- 
-gppp=git stash && git pull --rebase && git stash pop && git push
-gwhat=show 10 must recent branches
-"'
 
 alias ga='git add '
 alias gc='git commit '
-alias gcm='git commit -m '
+alias gcm='git commit -am '
 alias gs='git status'
 alias gits='git status'
 alias gp='git pull --rebase'
@@ -424,3 +414,4 @@ elif type complete >/dev/null 2>&1; then
         }
     }
 fi
+
