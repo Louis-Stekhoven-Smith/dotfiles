@@ -1,0 +1,18 @@
+[user]
+	name = Louis Stekhoven-Smith
+	email = louis.stekhoven@gmail.com\n 
+[gc]
+	reflogExpire = never
+[alias]
+    la = "!git config -l | grep alias | cut -c 7-"
+    pl = pull --rebase
+    aa = !git add -u && git add .
+    cm = "!cm() { git commit -m \"$1\"; }; cm"
+    ca = commit --amend --no-edit
+    cob = checkout -B
+    cb = "!cb() { git checkout $1 -- $2; }; cb"
+    re1 = reset HEAD^
+    reh = reset --hard
+    ri = "!ri() { git rebase -i HEAD~$1; }; ri"
+    publish = "!pub() { git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD);}; pub"
+    nuke = "!nuke() { git reset --hard head~20 && git pull;}; nuke"
